@@ -1,0 +1,25 @@
+//
+//  Card.swift
+//  Concentration
+//
+//  Created by Hanna Karnaukh on 5/13/18.
+//  Copyright © 2018 Hanna Karnaukh. All rights reserved.
+//
+
+import Foundation
+
+struct COCard {
+    var isFaceUP = false
+    var isMatched = false
+    var iD: Int
+    
+    static var identifierFactory = 0
+    static func getUniqueIdentifier() -> Int {
+        identifierFactory += 1
+        return identifierFactory
+    }
+    
+    init() {
+        self.iD = COCard.getUniqueIdentifier()
+    }
+}
