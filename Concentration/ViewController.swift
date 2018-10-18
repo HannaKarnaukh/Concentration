@@ -12,8 +12,11 @@ class ViewController: UIViewController {
     
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet weak var newGameButton: UIButton!
+    @IBOutlet weak var flipCountLabel: UILabel!
+    @IBOutlet weak var gameScoreLabel: UILabel!
     
-    private var emojisThemes = [animalsTheme, yellowFacesTheme]
+    
+    private var emojisThemes = [animalsTheme, yellowFacesTheme, flowersAndLeafs, moons, fruitsVegetables, vehicle, flags]
     private var emojiChoices = [String]()
     private var emojiOnCardId = [Int: String]()
     private lazy var game = COConcentration(numberOfPairsOfCard: cardButtons.count / 2)
