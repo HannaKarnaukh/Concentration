@@ -24,10 +24,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        set()
+        setGameOnStart()
     }
     
-    func set() {
+    func setGameOnStart() {
         updateViewFromModel()
         emojiChoices = emojisThemes[Int(arc4random_uniform(UInt32(emojisThemes.count)))]
         emojiOnCardId = [Int: String]()
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGamePressed(_ sender: UIButton) {
-        set()
+        setGameOnStart()
     }
     
     private func updateViewFromModel() {
