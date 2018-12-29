@@ -8,18 +8,26 @@
 
 import Foundation
 
-struct COCard {
+struct COCard: Hashable {
     var isFaceUP = false
     var isMatched = false
-    var iD: Int
+    private var iD: Int
     
-    static var identifierFactory = 0
-    static func getUniqueIdentifier() -> Int {
+    var hashValue: Int {
+        return iD
+    }
+    
+    private static var identifierFactory = 0
+    private static func getUniqueIdentifier() -> Int {
         identifierFactory += 1
         return identifierFactory
     }
     
     init() {
         self.iD = COCard.getUniqueIdentifier()
+    }
+    
+    static func == (lhs: COCard, rhs: COCard) -> Bool {
+        return lhs.iD == rhs.iD
     }
 }

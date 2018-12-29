@@ -10,21 +10,11 @@ import Foundation
 
 
 class COConcentration {
-    var cards = [COCard]()
+    private(set) var cards = [COCard]()
     
-    var indexOfOneAndOnlyFaceUpCard: Int? {
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
-            var foundInex: Int?
-            for index in cards.indices {
-                if cards[index].isFaceUP {
-                    if foundInex == nil {
-                        foundInex = index
-                    } else {
-                        return nil
-                    }
-                }
-            }
-            return foundInex
+            return faceUpCardIndies = cards.indices.filter { cards[$0].isFaceUP }.oneAndOnly
         }
         set {
             for index in cards.indices {
@@ -34,22 +24,23 @@ class COConcentration {
     }
     
     init(numberOfPairsOfCard: Int) {
+         assert(numberOfPairsOfCard > 0, "Concentrations.numberOfPairsOfCard(at: \(numberOfPairsOfCard): you must have at least one pair of cards")
         for _ in 1...numberOfPairsOfCard {
             let card = COCard()
             cards += [card, card]
         }
         var shuffledCards = [COCard]()
         for _ in 1...cards.count {
-            let randomNumber = Int(arc4random_uniform(UInt32(cards.count)))
-            shuffledCards.append(cards.remove(at: randomNumber))
+            shuffledCards.append(cards.remove(at: cards.count.arc4random))
         }
         cards = shuffledCards
     }
     
     func chooseCard(at index: Int) {
+        assert(cards.indices.contains(index), "Concentrations.chooseCard(at: \(index): chosen index not in the cards")
         if !cards[index].isMatched {
             if let matchedIndex = indexOfOneAndOnlyFaceUpCard, matchedIndex != index {
-                if cards[matchedIndex].iD == cards[index].iD {
+                if cards[matchedIndex] == cards[index] {
                     cards[matchedIndex].isMatched = true
                     cards[index].isMatched = true
                 }
@@ -58,5 +49,11 @@ class COConcentration {
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
+    }
+}
+
+extension Collection {
+    var oneAndOnly: Element? {
+        return count == 1 ? first : nil
     }
 }
